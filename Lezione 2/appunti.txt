@@ -1,0 +1,4 @@
+* {
+    box-sizing: border-box;
+}
+usefule to auto calculate widths relying on borders.

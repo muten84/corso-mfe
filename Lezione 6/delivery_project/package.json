@@ -1,0 +1,21 @@
+{
+  "name": "delivery_project",
+  "version": "1.0.0",
+  "description": "Use case study for bootstrap projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "corso",
+    "mfe"
+  ],
+  "author": "Luigi Bifulco",
+  "license": "MIT",
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "bootstrap": "^4.6.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.5.1"
+  }
+}

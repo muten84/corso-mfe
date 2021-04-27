@@ -1,0 +1,8 @@
+
+HTML: 
+ - inline elements, block elements: block elements reserve 100% of width available, if not available it tries to cnsume from next row
+ - box model: margin works on outer elements, padding and border on inner elements space
+
+ CSS:
+ - inline style, tag style file css style
+ - selector priority: id, classe, elemento
