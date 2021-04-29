@@ -76,10 +76,20 @@ const App = () => {
     fetchRestaurants().then((response) => {
       const m = response.data.map(r => {
         return {
+          "id": r.id,
           "title": r.name || '',
           "link": "./pages/card_detail.html",
           "desc": r.app_infos.about || '',
-          "image": 'https://raster-static.postmates.com/?url=https%3A%2F%2Fd1725r39asqzt3.cloudfront.net%2Fcbf49434-6c68-4947-862a-99b66fb2a01b%2Forig.jpg&quality=85&w=640&h=0&mode=auto&format=webp&v=4'
+          "image": 'https://raster-static.postmates.com/?url=https%3A%2F%2Fd1725r39asqzt3.cloudfront.net%2Fcbf49434-6c68-4947-862a-99b66fb2a01b%2Forig.jpg&quality=85&w=640&h=0&mode=auto&format=webp&v=4',
+          "detail": {
+              "about": r.app_infos.about || '',
+              "address": r.app_infos.address || '',
+              "logo": r.app_infos.logo_url || '',
+              "name": r.app_infos.name,
+              "lat": r.app_infos.latitude,
+              "lon": r.app_infos.longitude,
+              "website": r.app_infos.website,
+          }
         }
       });
       const size = 3;

@@ -16,7 +16,7 @@ import './theme.scss'
             <Route exact path="/">
               <App />
             </Route>
-            <Route path="/detail">
+            <Route path="/detail/:id">
               <DetailComponent />
             </Route>
         </Switch>

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-const DetailTitle = () => {
+const DetailTitle = (props) => {
 
     return (
         <>
@@ -9,7 +9,7 @@ const DetailTitle = () => {
             <div className="mx-auto col-12" style={{"maxWidth": "97%"}}>
                 <small className="text-muted text-uppercase">Free Delivery</small>
                 <h3>
-                    Pimp My Pasta
+                    {props.name}
                 </h3>
                 <div className="row mx-auto">
                     <span className="ml-1 text-uppercase badge badge-pill badge-secondary">35-45 Minutes</span>

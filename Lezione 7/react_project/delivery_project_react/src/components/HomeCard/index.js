@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-const HomeCard = ({ title, link, image, desc, history }) => {
+const HomeCard = ({ title, link, image, desc, id, detail, history }) => {
     console.log(history);
+    useEffect(()=>{
+        localStorage.setItem(id, JSON.stringify(detail));
+    }, [])
     return (
         <>
             <div className="col-sm-4 col-lg-4 col-md-4">
@@ -12,7 +15,7 @@ const HomeCard = ({ title, link, image, desc, history }) => {
                         alt="Card cap" />
                     <div className="card-body">
                         <h6 className="card-title">{title}</h6>
-                        <Link to="/detail">Detail</Link>
+                        <Link to={"/detail/"+id}>Detail</Link>
                     </div>
                 </div>
             </div>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import HeroDetail from '../../components/HeroDetail';
 import DetailTitle from '../../components/DetailTitle';
 import DetailCardListRow from '../../components/DetailCardListRow';
 
 import '../../App.scss';
+import { useParams } from 'react-router-dom';
 
 const menuItems = [
   {
@@ -65,12 +66,22 @@ const homeItems = [
 
 ]
 
-const DetailComponent = () => (
+const DetailComponent = () => {
+  let { id } = useParams();
+  const [currentDetail, setCurrentDetail] = useState({});
+  
+  useEffect(()=>{
+    const source = localStorage.getItem(id);
+    const detail = JSON.parse(source);
+    setCurrentDetail(detail);
+    console.log(id);
+  }, [])
+  return (
   <div>
     <Header detail={true} menuItems={menuItems}></Header>
     <HeroDetail></HeroDetail>
     <div className="container-fluid mx-auto" style={{ "maxWidth": "90%" }}>
-      <DetailTitle></DetailTitle>
+      <DetailTitle {...currentDetail}></DetailTitle>
       <div className="row mt-5">
         <div className="mx-auto col-12 border-bottom" style={{ "maxWidth": "97%" }}>
 
@@ -87,6 +98,6 @@ const DetailComponent = () => (
 
 
   </div>
-);
+)};
 
 export default DetailComponent;
