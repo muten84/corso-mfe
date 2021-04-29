@@ -1,0 +1,8 @@
+<div class="col-12">
+            
+    <div class="row mt-1">
+        <ng-template ngFor let-item [ngForOf]="cards" let-i="index" >
+            <app-home-card [title]=item.title [image]=item.image></app-home-card>
+          </ng-template>
+    </div>
+</div>

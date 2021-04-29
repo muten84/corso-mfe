@@ -11,7 +11,6 @@ const HomeCard = ({title, link, image, desc,history}) => {
                             alt="Card cap" />
                         <div className="card-body">
                             <h6 className="card-title">{title}</h6>
-                                {/* <a href={link} className="">{desc}</a> */}
                                 <Link to="/detail">Detail</Link>
                         </div>
                     </div>
