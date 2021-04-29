@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import HomeCardRow from './components/HomeCardRow';
-
+import { fetchRestaurants } from './service/api'
 import './App.scss';
+import Spinner from 'react-bootstrap/Spinner'
 
 const menuItems = [
   {
@@ -61,25 +62,68 @@ const homeItems = [
     "desc": "Description",
     "image": "https://raster-static.postmates.com/?url=https%3A%2F%2Fd1725r39asqzt3.cloudfront.net%2F4b7f26df-966e-49b3-b483-a643816b70ea%2Forig.jpg&quality=85&w=640&h=0&mode=auto&format=webp&v=4"
   }]
-  
+
 ]
 
-const App = () => (
-  <div>
-    <Header detail={false} menuItems={menuItems}></Header>
-    <Hero></Hero>
-    <div className="container-fluid mx-auto" style={{"maxWidth": '70%'}}>
+
+
+//fetchRestaurants();
+
+const App = () => {
+  const [items, setItems] = useState([]);
+
+  const handleHomeItems = () => {
+    fetchRestaurants().then((response) => {
+      const m = response.data.map(r => {
+        return {
+          "title": r.name || '',
+          "link": "./pages/card_detail.html",
+          "desc": r.app_infos.about || '',
+          "image": 'https://raster-static.postmates.com/?url=https%3A%2F%2Fd1725r39asqzt3.cloudfront.net%2Fcbf49434-6c68-4947-862a-99b66fb2a01b%2Forig.jpg&quality=85&w=640&h=0&mode=auto&format=webp&v=4'
+        }
+      });
+      const size = 3;
+      const result = [];
+      for (let i = 0; i < m.length; i += size) {
+        result.push(m.slice(i, i + size));
+      }
+
+      console.log(">>>", m)
+      setItems(result);
+
+    });
+  }
+
+  useEffect(() => {
+    handleHomeItems();
+  }, []);
+
+  return (
+    <div>
+      <Header detail={false} menuItems={menuItems}></Header>
+      <Hero></Hero>
+      <div className="container-fluid mx-auto" style={{ "maxWidth": '70%' }}>
         <div className="row mt-5">
-            <div className="mx-auto col-12" style={{"maxWidth": '97%'}}>
-                <h3>Daily deals</h3>
-                <span>Epic deals from your favourite restaurants</span>
-            </div>
+          <div className="mx-auto col-12" style={{ "maxWidth": '97%' }}>
+            <h3>Daily deals</h3>
+            <span>Epic deals from your favourite restaurants</span>
+          </div>
         </div>
-        {homeItems.map(i => {
-          return <HomeCardRow items={i}></HomeCardRow>
+        {items.length <= 0 ? (
+          <div class="d-flex justify-content-center">
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
+            ) 
+           :
+         items.map(i => {
+            return <HomeCardRow items={i}></HomeCardRow>
         })}
+
+      </div>
     </div>
-  </div>
-);
+  )
+};
 
 export default App;

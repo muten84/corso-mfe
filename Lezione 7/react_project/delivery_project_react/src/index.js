@@ -10,13 +10,20 @@ import DetailComponent from './pages/DetailComponent'
 import 'font-awesome/css/font-awesome.min.css';
 import './theme.scss'
 
-ReactDOM.render(
+ ReactDOM.render(
       <Router> 
         <Switch>
-            <Route exact path="/" render={App} />
-            <Route path="/detail" render={DetailComponent} />
+            <Route exact path="/">
+              <App />
+            </Route>
+            <Route path="/detail">
+              <DetailComponent />
+            </Route>
         </Switch>
-      </Router>, document.getElementById('root'));
+      </Router>, document.getElementById('root')); 
+
+      /* ReactDOM.render(
+        <App />, document.getElementById('root')); */
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
