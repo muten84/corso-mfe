@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ApiService } from 'src/app/service/api.service';
+import { NgxSpinnerService } from "ngx-spinner";
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-home',
@@ -68,9 +71,32 @@ export class HomeComponent implements OnInit {
   }
 ]
 
-  constructor() { }
+  constructor(private apiService: ApiService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.handleRestaurants();
+  }
+
+  private handleRestaurants() {
+    this.spinner.show();
+    this.apiService.fetchRestaurants().pipe(map((arr: any)=>{
+      return arr.map((e: any) => { return {
+        "title": e.name || '',
+        "link": "./pages/card_detail.html",
+        "desc": e.app_infos.about || '',
+        "image": 'https://raster-static.postmates.com/?url=https%3A%2F%2Fd1725r39asqzt3.cloudfront.net%2Fcbf49434-6c68-4947-862a-99b66fb2a01b%2Forig.jpg&quality=85&w=640&h=0&mode=auto&format=webp&v=4'
+      };
+      });
+    })).subscribe((m) => {
+      const l = m as any;
+      const size = 3;
+      const result = [];
+      for (let i = 0; i < l.length; i += size) {
+        result.push(l.slice(i, i + size));
+      }
+      this.homeItems = result;
+      this.spinner.hide();
+    });
   }
 
 }
