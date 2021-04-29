@@ -1,0 +1,12 @@
+try using single spa to compose two components from each application
+https://single-spa.js.org/docs/getting-started-overview
+
+ - single spa for example enable to share common code to every application (react or angular or view) and to coexist two app in a single page 
+
+ - another use case could be to link microfronted by routings changes keeping ezecution domain history
+
+ - the simplest use case is to coexist two different components in the same app (in this way an element match a component
+ and the micrfrontend could match the parent component of each application).
+
+ In each case the routing depends on the frameowrk that aggregates micrfrontends
+

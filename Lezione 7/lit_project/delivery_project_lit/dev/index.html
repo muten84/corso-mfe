@@ -3,11 +3,19 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>&lt;my-element> Demo</title>
+    <title>&lt;custom-element> Demo</title>
 
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/lit/polyfill-support.js"></script>
-    <script type="module" src="../my-element.js"></script>
+    <script type="module" src="../header-element.js"></script>
+    <script>
+      const init = () => {
+        const myElement = document.querySelector('header-element');
+        console.log(myElement);
+        myElement.addEventListener('custom-event', (e) => {console.log('received event outside of custom element',e)});
+      }
+      
+    </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
     <style>
       p {
@@ -16,9 +24,9 @@
       }
     </style>
   </head>
-  <body>
-    <my-element>
+  <body onload="init()">
+    <header-element title="Custom Title">
       <p>This is child content</p>
-    </my-element>
+    </header-element>
   </body>
 </html>

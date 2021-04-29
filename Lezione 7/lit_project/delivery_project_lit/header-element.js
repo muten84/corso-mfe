@@ -12,7 +12,7 @@ import {LitElement, html, css} from 'lit';
  * @slot - This element has a slot
  * @csspart button - The button
  */
-export class MyElement extends LitElement {
+export class HeaderElement extends LitElement {
   static get styles() {
     return css`
       p {
@@ -183,9 +183,9 @@ export class MyElement extends LitElement {
   static get properties() {
     return {
       /**
-       * The name to say "Hello" to.
+       * The title for the header
        */
-      name: {type: String},
+      title: {type: String},
 
       /**
        * The number of times the button has been clicked.
@@ -196,9 +196,50 @@ export class MyElement extends LitElement {
 
   constructor() {
     super();
-    this.name = 'World';
+    this.title = 'Postmates';
     this.count = 0;
+    this.addEventListener('custom-event', async (e) => {
+      console.log('received event custom-event');
+      console.log(e.detail.message);
+      console.log(await this.requestUpdate());
+    });
   }
+
+  connectedCallback() {
+    super.connectedCallback();
+    //window.addEventListener('resize', this._handleResize);
+    console.log('connected callback: Invoked when a component is added to the document’s DOM.');
+  }
+
+  disconnectedCallback() {
+    //window.removeEventListener('resize', this._handleResize);
+    super.disconnectedCallback();
+    console.log('disconnectedCallback callback: Invoked when a component is removed from the document’s DOM.');
+  }
+
+  adoptedCallback() {
+    super.adoptedCallback();
+    console.log('adoptedCallback callback: Invoked when a component is moved to a new document.');
+  }
+
+  async firstUpdated(changedProperties) {
+    console.log('firstUpdated', changedProperties);
+    await Promise.all([this.updateComplete]);
+    console.log('Update complete. Other state completed.');
+  }
+
+  async updated(changedProperties) {
+    console.log('updated', changedProperties);
+    await Promise.all([this.updateComplete]);
+    console.log('Update complete. Other state completed.');
+  }
+
+ /*  attributeChangedCallback() {
+    super.attributeChangedCallback();
+    console.log('attributeChangedCallback callback: Invoked when component attribute changes.');
+  } */
+
+  
 
   render() {
     return html`
@@ -208,7 +249,7 @@ export class MyElement extends LitElement {
         <nav
           class="navbar navbar-expand-lg navbar-light d-header fill-background"
         >
-          <a class="navbar-brand" href="#">Postmates ${this.count}</a>
+          <a class="navbar-brand" href="#">${this.title} ${this.count}</a>
           <button
             id="navbarTogglerBtn"
             @click=${this._onClick}
@@ -258,7 +299,11 @@ export class MyElement extends LitElement {
 
   _onClick() {
     this.count++;
+    let newMessage = new CustomEvent('custom-event', {
+      detail: { message: 'hello. a cutom-event happened.' }
+    });
+    this.dispatchEvent(newMessage);
   }
 }
 
-window.customElements.define('my-element', MyElement);
+window.customElements.define('header-element', HeaderElement);
