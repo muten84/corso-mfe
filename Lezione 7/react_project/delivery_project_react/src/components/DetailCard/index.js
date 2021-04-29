@@ -1,7 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
+import { fetchRestaurantCategories } from '../../service/api';
 
-const DetailTitle = () => {
+const DetailTitle = (props) => {
+
+  
 
     return (
         <>
@@ -12,11 +15,11 @@ const DetailTitle = () => {
                         <div className="col-md-8">
                             <div className="card-body p-0 m-0 ">
                                 <div className="ml-auto">
-                                    <p className="font-weight-bold card-title mb-1">Card title</p>
+                                    <p className="font-weight-bold card-title mb-1">{props.title}</p>
 
                                 </div>
-                                <p className="card-text mb-1">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <p className="card-text mb-1"><small className="price">10.99 €</small></p>
+                                <p className="card-text mb-1">{props.subtitle}</p>
+                                <p className="card-text mb-1"><small className="price">{props.price} €</small></p>
 
                             </div>
                         </div>

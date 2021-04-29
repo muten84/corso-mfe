@@ -6,6 +6,7 @@ import DetailCardListRow from '../../components/DetailCardListRow';
 
 import '../../App.scss';
 import { useParams } from 'react-router-dom';
+import { fetchRestaurantCategories } from '../../service/api';
 
 const menuItems = [
   {
@@ -69,13 +70,32 @@ const homeItems = [
 const DetailComponent = () => {
   let { id } = useParams();
   const [currentDetail, setCurrentDetail] = useState({});
+  const [detailItems, setDetailItems] = useState([]);
   
   useEffect(()=>{
     const source = localStorage.getItem(id);
     const detail = JSON.parse(source);
     setCurrentDetail(detail);
+    fetchRestaurantCategories(id).then(response => {
+      //fetch first category and render its itemsd
+      const m = response.data[0].byname_products.map(p=>{
+        return {
+          "title": p.title,
+          "subtitle": p.subtitle,
+          "price": p.reservation_items[0].price
+        }
+      });
+      const size = 2;
+      const result = [];
+      for (let i = 0; i < m.length; i += size) {
+        result.push(m.slice(i, i + size));
+      }
+      setDetailItems(result);
+    });
+    
     console.log(id);
-  }, [])
+  }, []);
+
   return (
   <div>
     <Header detail={true} menuItems={menuItems}></Header>
@@ -92,8 +112,9 @@ const DetailComponent = () => {
 
         </div>
       </div>
-      <DetailCardListRow items={['1', '2']}></DetailCardListRow>
-      <DetailCardListRow items={['1', '2']}></DetailCardListRow>
+      {detailItems.map(row => {
+        return (<DetailCardListRow items={row}></DetailCardListRow>);
+      })}
     </div>
 
 

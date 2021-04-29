@@ -9,7 +9,7 @@ const DetailCardListRow = (props) => {
              <div class="col-12">
             <div class="row mt-1">
                 {props.items.map(e => {
-                    return (<DetailCard></DetailCard>)
+                    return (<DetailCard {...e}></DetailCard>)
                 })}
             </div>
           </div>

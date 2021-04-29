@@ -6,10 +6,8 @@ export const fetchRestaurants = () => {
 }
 
 
-export const fetchRestaurantDetails = () => {
-    const url = 'https://api.pasto.app/api/v2/utils/724/partners.json';
-    return new Promise( (resolve, reject) => {
-         axios.get(url).then(response => {})
-    })
+export const fetchRestaurantCategories = (appId) => {
+    const url = 'https://api.pasto.app/api/v2/utils/775/categories.json';
+    return axios.get(url);
     
 }
