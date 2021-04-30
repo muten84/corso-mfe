@@ -1,10 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap" ;
-
-
-
+@import "~bootstrap/scss/bootstrap";
 
 * {
   box-sizing: border-box;
@@ -178,3 +175,8 @@ h1 {
   font-size: 1rem;
 }
 
+.fix-to-top {
+  margin-top: 0;
+  padding-top: 0;
+  top: -1px;
+}
