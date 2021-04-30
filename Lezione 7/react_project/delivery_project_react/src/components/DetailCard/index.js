@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { fetchRestaurantCategories } from "../../service/api";
+import React from "react";
+
+import { connect } from "react-redux";
+import { addToCart } from "../../redux/actions";
+//export default DetailTitle;
 
 const DetailTitle = (props) => {
-  const addToCart = (p) => {
-    console.log(p);
+  const handleAddToCartWithoutRedux = (p) => {
     let newMessage = new CustomEvent("add-to-cart", {
       detail: { message: JSON.stringify(p) },
     });
     const el = document.getElementById("detailComponent");
     el.dispatchEvent(newMessage);
+  };
+
+  /**
+   * redux style!!
+   * @param {p} p
+   */
+  const handleAddToCart = (p) => {
+    props.addToCart(p);
   };
 
   return (
@@ -29,7 +39,7 @@ const DetailTitle = (props) => {
                 </p>
                 <button
                   className="btn d-button"
-                  onClick={() => addToCart(props)}
+                  onClick={() => handleAddToCart(props)}
                 >
                   + Add to cart
                 </button>
@@ -49,4 +59,5 @@ const DetailTitle = (props) => {
   );
 };
 
-export default DetailTitle;
+//export default DetailTitle;
+export default connect(null, { addToCart })(DetailTitle);

@@ -1,50 +1,52 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { fetchRestaurantCategories } from "../../service/api";
+import { connect } from "react-redux";
+import { removeFromCart } from "../../redux/actions";
 
-// Hook
+/**
+ * useful without redux
+ * @param {e} eventName
+ * @param {*} handler
+ * @param {*} element
+ */
 function useEventListener(eventName, handler, element = window) {
-  // Create a ref that stores handler
-  //debugger;
   const savedHandler = useRef();
-  // Update ref.current value if handler changes.
-  // This allows our effect below to always get latest handler ...
-  // ... without us needing to pass it in effect deps array ...
-  // ... and potentially cause effect to re-run every render.
+
   useEffect(() => {
     savedHandler.current = handler;
   }, [handler]);
-  useEffect(
-    () => {
-      // Make sure element supports addEventListener
-      // On
-      const isSupported = element && element.addEventListener;
-      if (!isSupported) return;
-      // Create event listener that calls handler function stored in ref
-      const eventListener = (event) => savedHandler.current(event);
-      // Add event listener
-      element.addEventListener(eventName, eventListener);
-      // Remove event listener on cleanup
-      return () => {
-        element.removeEventListener(eventName, eventListener);
-      };
-    },
-    [eventName, element] // Re-run if eventName or element changes
-  );
+  useEffect(() => {
+    const isSupported = element && element.addEventListener;
+    if (!isSupported) return;
+
+    const eventListener = (event) => savedHandler.current(event);
+
+    element.addEventListener(eventName, eventListener);
+
+    return () => {
+      element.removeEventListener(eventName, eventListener);
+    };
+  }, [eventName, element]);
 }
 
 const CartDetail = (props) => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(props.items);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
   };
 
+  /**
+   * redux style!!
+   * @param {idx} idx
+   */
   const removeProd = (idx) => {
-    delete items[idx];
-    setItems(items.filter((o) => o !== undefined));
+    props.removeFromCart(idx);
   };
 
+  /**
+   * * useful without redux
+   */
   const handler = useCallback(
     (o) => {
       console.log("callback invoked", o);
@@ -53,26 +55,23 @@ const CartDetail = (props) => {
       }
       const p = JSON.parse(o.detail.message);
       const c = [].concat(items, [p]);
-      setItems(c);
+      //setItems(c);
     },
     [setItems, items]
   );
 
+  /**
+   * redux style!
+   */
   useEffect(() => {
-    const el = document.getElementById("detailComponent");
-    if (!el) {
-      return;
-    }
-    el.addEventListener("add-to-cart", (o) => {
-      console.log("receive event", o);
-      /* const p = JSON.parse(o.detail.message);
-            const c = [].concat(items, [p])
-            setItems(c); */
-    });
-  }, []);
+    setItems(props.items);
+  }, [props.items]);
 
+  /**
+   * redux style!!
+   */
   useEffect(() => {
-    console.log("items chaged", items.length);
+    console.log("items chaged", items && items.length);
     if (!items || items.length <= 0) {
       return;
     }
@@ -81,8 +80,11 @@ const CartDetail = (props) => {
     });
     console.log("price", totalPrice);
     setTotalPrice(totalPrice.price);
-  }, [items.length]);
+  }, [items]);
 
+  /**
+   * useful without redux!
+   */
   const el = document.getElementById("detailComponent");
   useEventListener("add-to-cart", handler, el);
 
@@ -90,24 +92,40 @@ const CartDetail = (props) => {
     <>
       <div id="mySidenav" className="d-sidenav">
         <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
-          &times; {items.length}
+          &times;
         </a>
         <ul>
-          {items.map((i, idx) => {
-            return (
-              <li style={{ color: "white" }}>
-                <span>{i.title + " " + i.price + "€"}</span>{" "}
-                <span onClick={() => removeProd(idx)}>-</span>
-              </li>
-            );
-          })}
+          {items &&
+            items.map((i, idx) => {
+              return (
+                <li>
+                  <span
+                    className="mr-2 btn btn-outline-danger btn-link"
+                    onClick={() => removeProd(idx)}
+                  >
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </span>
+                  <span className="p-0">{i.title + " " + i.price + "€"}</span>{" "}
+                </li>
+              );
+            })}
         </ul>
-        <span style={{ color: "white" }}>
-          Totale: {totalPrice && totalPrice}
-        </span>
+        <span>Totale: {totalPrice && totalPrice} €</span>
       </div>
     </>
   );
 };
 
-export default CartDetail;
+/**
+ * inject cart state to properties functional component
+ * in this case the properties coming from store was the same used by the components
+ */
+const mapStateToProps = (state) => {
+  return state.cart;
+};
+
+/**
+ * connect the component to state incoming from store and to action incoming from component
+ * all state and actions incoming form store are inject in the props of the functional component
+ */
+export default connect(mapStateToProps, { removeFromCart })(CartDetail);

@@ -1,28 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
-import App from './App';
-import DetailComponent from './pages/DetailComponent'
+import App from "./App";
+import DetailComponent from "./pages/DetailComponent";
 
 // Importing the Bootstrap CSS
 //import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.min.css';
-import './theme.scss'
+import "font-awesome/css/font-awesome.min.css";
+import "./theme.scss";
 
- ReactDOM.render(
-      <Router> 
-        <Switch>
-            <Route exact path="/">
-              <App />
-            </Route>
-            <Route path="/detail/:id">
-              <DetailComponent />
-            </Route>
-        </Switch>
-      </Router>, document.getElementById('root')); 
+ReactDOM.render(
+  <Router>
+    <Switch>
+      <Route exact path="/">
+        <App />
+      </Route>
+      <Route path="/detail/:id">
+        <Provider store={store}>
+          <DetailComponent />
+        </Provider>
+      </Route>
+    </Switch>
+  </Router>,
+  document.getElementById("root")
+);
 
-      /* ReactDOM.render(
+/* ReactDOM.render(
         <App />, document.getElementById('root')); */
 
 // If you want to start measuring performance in your app, pass a function
