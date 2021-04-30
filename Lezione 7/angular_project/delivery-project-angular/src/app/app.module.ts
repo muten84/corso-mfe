@@ -17,6 +17,7 @@ import { DetailCategoryComponent } from './components/detail-category/detail-cat
 import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
 import { DetailTitleComponent } from './components/detail-title/detail-title.component';
 import { DetailCardComponent } from './components/detail-card/detail-card.component';
+import { CartListComponent } from './components/cart-list/cart-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { DetailCardComponent } from './components/detail-card/detail-card.compon
     HeroDetailComponent,
     DetailTitleComponent,
     DetailCardComponent,
+    CartListComponent,
   ],
   imports: [
     BrowserModule,

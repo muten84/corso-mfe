@@ -12,4 +12,9 @@ export class DetailTitleComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  public openCartList() {
+    const el = document.getElementById('mySidenav');
+    el ? (el.style.width = '250px') : undefined;
+  }
 }
