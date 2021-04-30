@@ -110,7 +110,7 @@ const DetailComponent = () => {
   return (
     <div id="detailComponent">
       <CartDetail></CartDetail>
-      <Header detail={true} menuItems={menuItems}></Header>
+      {/* <Header detail={true} menuItems={menuItems}></Header> */}
       <HeroDetail></HeroDetail>
       <div className="container-fluid mx-auto" style={{ maxWidth: "90%" }}>
         <DetailTitle {...currentDetail}></DetailTitle>

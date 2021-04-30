@@ -6,6 +6,8 @@ import { fetchRestaurants } from "./service/api";
 import "./App.scss";
 import Spinner from "react-bootstrap/Spinner";
 import CartDetail from "./components/CartDetail";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import DetailComponent from "./pages/DetailComponent";
 
 const menuItems = [
   {
@@ -120,26 +122,38 @@ const App = () => {
     <div>
       <CartDetail></CartDetail>
       <Header detail={false} menuItems={menuItems}></Header>
-      <Hero></Hero>
-      <div className="container-fluid mx-auto" style={{ maxWidth: "70%" }}>
-        <div className="row mt-5">
-          <div className="mx-auto col-12" style={{ maxWidth: "97%" }}>
-            <h3>Daily deals</h3>
-            <span>Epic deals from your favourite restaurants</span>
-          </div>
-        </div>
-        {items.length <= 0 ? (
-          <div class="d-flex justify-content-center">
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
-          </div>
-        ) : (
-          items.map((i) => {
-            return <HomeCardRow items={i}></HomeCardRow>;
-          })
-        )}
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Hero></Hero>
+            <div
+              className="container-fluid mx-auto"
+              style={{ maxWidth: "70%" }}
+            >
+              <div className="row mt-5">
+                <div className="mx-auto col-12" style={{ maxWidth: "97%" }}>
+                  <h3>Daily deals</h3>
+                  <span>Epic deals from your favourite restaurants</span>
+                </div>
+              </div>
+              {items.length <= 0 ? (
+                <div class="d-flex justify-content-center">
+                  <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </div>
+              ) : (
+                items.map((i) => {
+                  return <HomeCardRow items={i}></HomeCardRow>;
+                })
+              )}
+            </div>
+          </Route>
+          <Route path="/detail/:id">
+            <DetailComponent />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 };

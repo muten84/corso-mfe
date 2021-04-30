@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ApiService } from 'src/app/service/api.service';
+import { ThrowStmt } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { map } from 'rxjs/operators';
+import { ApiService } from 'src/app/service/api.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated,
+  selector: 'app-detail-restaurant',
+  templateUrl: './detail-restaurant.component.html',
+  styleUrls: ['./detail-restaurant.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class DetailRestaurantComponent implements OnInit {
   homeItems = [
     [
       {
@@ -59,41 +59,38 @@ export class HomeComponent implements OnInit {
     ],
   ];
 
+  id: any = undefined;
+
+  categories: Array<any> = [];
+
+  current: any = undefined;
+
+  products: Array<any> = [];
+
   constructor(
-    private apiService: ApiService,
+    private route: ActivatedRoute,
+    private api: ApiService,
     private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
-    this.handleRestaurants();
-  }
-
-  private handleRestaurants() {
     this.spinner.show();
-    this.apiService
-      .fetchRestaurants()
-      .pipe(
-        map((arr: any) => {
-          return arr.map((e: any) => {
-            return {
-              title: e.name || '',
-              link: './pages/card_detail.html',
-              desc: e.app_infos.about || '',
-              image:
-                'https://raster-static.postmates.com/?url=https%3A%2F%2Fd1725r39asqzt3.cloudfront.net%2Fcbf49434-6c68-4947-862a-99b66fb2a01b%2Forig.jpg&quality=85&w=640&h=0&mode=auto&format=webp&v=4',
-            };
-          });
-        })
-      )
-      .subscribe((m) => {
-        const l = m as any;
-        const size = 3;
+    this.route.params.subscribe((params) => {
+      this.id = params['id'];
+      console.log('params: ', this.id);
+      this.api.fetchRestaurantCategories(this.id).subscribe((response) => {
+        //console.log(response);
+        this.categories = response as Array<any>;
+        this.current = this.categories[0] as any;
+        const l = this.current.byname_products;
+        const size = 2;
         const result = [];
         for (let i = 0; i < l.length; i += size) {
           result.push(l.slice(i, i + size));
         }
-        this.homeItems = result;
+        this.products = result;
         this.spinner.hide();
       });
+    });
   }
 }

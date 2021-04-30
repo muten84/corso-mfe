@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -13,18 +13,9 @@ import "font-awesome/css/font-awesome.min.css";
 import "./theme.scss";
 
 ReactDOM.render(
-  <Router>
-    <Switch>
-      <Route exact path="/">
-        <App />
-      </Route>
-      <Route path="/detail/:id">
-        <Provider store={store}>
-          <DetailComponent />
-        </Provider>
-      </Route>
-    </Switch>
-  </Router>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById("root")
 );
 
