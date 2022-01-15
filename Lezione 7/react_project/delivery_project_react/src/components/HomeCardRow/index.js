@@ -6,7 +6,7 @@ const HomeCardRow= (props) => {
     const [items, setItems] = useState(props.items);
 
     const rowList = (list) => {
-        return list.map(e => {
+        return list && list.map(e => {
             return (<><HomeCard {...e}></HomeCard></>)
         });
     }
@@ -14,7 +14,7 @@ const HomeCardRow= (props) => {
     return (
         <>
             <div className="col-12">
-            
+
                 <div className="row mt-1">
                     {rowList(items)}
                 </div>

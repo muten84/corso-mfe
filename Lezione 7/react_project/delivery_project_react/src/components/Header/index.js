@@ -36,7 +36,7 @@ const Header = (props) => {
   };
 
   const menuList = () => {
-    return menuItems.map((e) => {
+    return props.menuItems && props.menuItems.map((e) => {
       return (
         <>
           <li key={e.value} className="nav-item">
@@ -91,7 +91,7 @@ const Header = (props) => {
 
         /*  else{
                    /*   el.classList.add('collapsed');
-                     el.classList.remove('collapsing'); 
+                     el.classList.remove('collapsing');
                  } */
       }
     });

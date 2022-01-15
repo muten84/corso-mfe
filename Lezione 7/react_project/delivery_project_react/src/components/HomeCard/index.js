@@ -13,8 +13,8 @@ const HomeCard = ({ title, link, image, desc, id, detail, history }) => {
                     <img className="card-img-top"
                         src={image}
                         alt="Card cap" />
-                    <div className="card-body">
-                        <h6 className="card-title">{title}</h6>
+                    <div className="card-body wrap-ellipsis">
+                        <h6 className="card-title wrap-ellipsis">{title}</h6>
                         <Link to={"/detail/"+id}>Detail</Link>
                     </div>
                 </div>
