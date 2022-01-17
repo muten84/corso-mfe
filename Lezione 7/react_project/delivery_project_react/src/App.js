@@ -107,8 +107,8 @@ const App = () => {
             >
               <div className="row mt-5">
                 <div className="mx-auto col-12" style={{ maxWidth: "97%" }}>
-                  <h3>Daily deals</h3>
-                  <span>Epic deals from your favourite restaurants</span>
+                  <h3>Daily fresh products!</h3>
+                  <span>Not Lorem Ipsum</span>
                 </div>
               </div>
               {items.length <= 0 ? (

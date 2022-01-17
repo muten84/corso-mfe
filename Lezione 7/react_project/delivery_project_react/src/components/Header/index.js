@@ -99,15 +99,6 @@ const Header = (props) => {
     setInitialized(true);
   }, []);
 
-  useEffect(() => {
-    console.log("initialized state processed", initialized, collapse);
-
-    if (!initialized) {
-    }
-    if (collapse) {
-    }
-  }, [initialized, collapse]);
-
   return (
     <>
       <div
