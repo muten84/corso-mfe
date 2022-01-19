@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../fingenius-site"
+		},
+		{
+			"path": "../../../.."
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}

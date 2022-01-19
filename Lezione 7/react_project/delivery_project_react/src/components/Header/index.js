@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./header.scss";
 
 const Header = (props) => {
-  const fillBackgroundClass = "fill-background";
+  const fillBackgroundClass = "fill-background-2";
 
   const [collapse, setCollapse] = useState(false);
   const [initialized, setInitialized] = useState(false);
@@ -53,13 +53,13 @@ const Header = (props) => {
     console.log("detail is", detail);
     if (detail) {
       console.log();
-      document.querySelectorAll(".fill-background").forEach((e) => {
-        e.classList.remove("fill-background");
+      document.querySelectorAll(".fill-background-2").forEach((e) => {
+        e.classList.remove("fill-background-2");
         e.classList.add("fill-background-detail");
       });
     } else {
       document.querySelectorAll(".fill-background-detail").forEach((e) => {
-        e.classList.add("fill-background");
+        e.classList.add("fill-background-2");
         e.classList.remove("fill-background-detail");
       });
     }
@@ -108,9 +108,10 @@ const Header = (props) => {
           " sticky-top fix-to-top"
         }
       >
-        <nav className="navbar navbar-expand-lg navbar-light d-header fill-background">
+        <nav className="navbar navbar-expand-lg navbar-light d-header fill-background-2">
           <a className="navbar-brand" href="#">
-            Postmates{" "}
+            Shop{" "}
+            {/* <img src="assets/logo.png" /> */}
           </a>
           <button
             id="navbarTogglerBtn"

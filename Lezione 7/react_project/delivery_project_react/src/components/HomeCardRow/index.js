@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import HomeCard from '../HomeCard'
 
-const HomeCardRow= (props) => {
+const HomeCardRow = (props) => {
 
     const [items, setItems] = useState(props.items);
 

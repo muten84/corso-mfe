@@ -45,7 +45,8 @@ const App = () => {
         title: p.title || "",
         link: "./pages/card_detail.html",
         desc: p.description|| "",
-        image: p.image
+        image: p.image,
+        price: p.price,
       }});
       const size = 3;
       const result = [];
